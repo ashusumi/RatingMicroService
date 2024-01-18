@@ -18,4 +18,6 @@ public interface RatingService {
 	public String updateRatings(Integer id,Ratings ratings);
 	
 	public String deleteRatings(Integer id);
+	
+	public String  addListRatings(List<Ratings> list);
 }

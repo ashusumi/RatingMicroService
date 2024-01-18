@@ -1,8 +1,11 @@
 package com.RatingService.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +46,15 @@ public class RatingController {
 		
 	}
 	
+	@PostMapping("/addAllRatings")
+	public ResponseEntity<?> addMoreThanOneRatings(@RequestBody List<Ratings> ratings){
+		try {
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(impl.addListRatings(ratings));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
+	}
+	
 	@GetMapping("hotel/{hotelId}")
 	public ResponseEntity<?> getHotelById(@PathVariable String hotelId) {
 		try {
@@ -52,6 +64,7 @@ public class RatingController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('SCOPE_email')")
 	@GetMapping("/user/{id}")
 	public ResponseEntity<?> getUsersById(@PathVariable String  id) {
 		try {

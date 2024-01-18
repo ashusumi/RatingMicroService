@@ -61,4 +61,13 @@ public class RatingServiceImpl implements RatingService {
 		return ratingsRepo.findByHotelId(hotelId);
 	}
 
+	@Override
+	public String addListRatings(List<Ratings> list) {
+		ratingsRepo.saveAll(list);
+		
+		return "Ratings added successfuly";
+	}
+	
+	
+
 }
